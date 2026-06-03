@@ -2,8 +2,9 @@ import { router } from 'expo-router';
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
+import { clearKaucja } from '../../services/api/database/api';
+
 import { ActionCard } from "../../services/components/actioncard";
-import { Tab } from '../../services/components/bottommenu';
 import { Header } from '../../services/components/header';
 import { ListRow } from '../../services/components/listrow';
 import { StatInformation } from '../../services/components/statinformation';
@@ -17,7 +18,6 @@ export default function Home() {
             <Header/>
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <StatInformation/>
-
                 <View style={styles.grid}>
                     <ActionCard 
                         title="Zeskanuj BUTELKE" 
@@ -29,7 +29,6 @@ export default function Home() {
                         }}
                     />
                     
-                
                     <View style={styles.gridRight}>
                         <ActionCard 
                             title="Strefa z NAGRODAMI" 
@@ -53,7 +52,23 @@ export default function Home() {
                     </View>
                 </View>
 
+                <ActionCard 
+                    title="Kaucuś" 
+                    subtitle="Pamiętaj o Kaucusiu" 
+                    icon="pet" 
+                    bg="#491790" 
+                    onPress={() => {
+                        //router.push('/pet')
+                    }}
+                />
+
+                <View style={{ height: 8 }}/>
+
+
                 <View style={styles.listSection}>
+                    <ListRow icon="calendar" label="Wydarzenia" onPress={() => {}}/>
+                    <View style={styles.listDivider}/>
+
                     <ListRow icon="clock" label="Ostatnia Aktywność" onPress={() => {}}/>
                     <View style={styles.listDivider}/>
 
@@ -68,6 +83,12 @@ export default function Home() {
 
                     <ListRow icon="info" label="O Aplikacji" onPress={() => { router.push('/about') }}/>
                     <View style={styles.listDivider}/>
+
+                    <ListRow icon="info" label="Reset" onPress={() => { 
+                        clearKaucja();
+                        alert("clear")
+                    }}/>
+                    <View style={styles.listDivider}/>
                 </View>
 
                 <View style={{ height: 16 }}/>
@@ -77,15 +98,11 @@ export default function Home() {
                 </View>
 
                 <View style={{ height: 16 }}/>
+
+
             </ScrollView>
 
 
-            <View style={styles.bottomNav}>
-                <Tab icon="home" label="Strona Główna" active={activeTab === "home"} onPress={() => setActiveTab("home")}/>
-                <Tab icon="pet" label="Kaucuś" active={activeTab === "pet"} onPress={() => setActiveTab("pet")}/>
-                <Tab icon="shop" label="Sklep" active={activeTab === "shop"} onPress={() => setActiveTab("shop")}/>
-                <Tab icon="person" label="Profil" active={activeTab === "profile"} onPress={() => setActiveTab("profile")}/>
-            </View>
         </View>
     );
 }

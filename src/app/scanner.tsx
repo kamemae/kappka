@@ -1,10 +1,10 @@
-
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Text, Vibration, View } from "react-native";
-import getInformationWithBarcode from '../../services/api/openfoodfacts/api';
 
+import { updateActivity, updateKaucja, updateStreak } from '../../services/api/database/api';
+import getInformationWithBarcode from '../../services/api/openfoodfacts/api';
 import { ActionCard } from "../../services/components/actioncard";
 import { Header } from '../../services/components/header';
 const styles = require("../../services/styles/globalStyles");
@@ -38,14 +38,18 @@ export default function scanner() {
         if(result) {
             const bottle = result?.product?.packaging;
             alert(`${JSON.stringify(data)}`);
+            await updateKaucja(50);
         } else {
-            alert("Nie znaleziono takiej butelki");
+            //alert("Nie znaleziono takiej butelki");
+            await updateKaucja(10);
         }
+        await updateActivity(barcode);
+        await updateStreak();
 
         setTimeout(() => {
             cooldown.current = false;
             setScanned(false);
-        }, 2000);
+        }, 5000);
     }
 
 

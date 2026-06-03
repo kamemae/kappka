@@ -8,8 +8,8 @@ export default async function getInformationWithBarcode(barcode) {
 
         const data = await response.json();
         return data;
-    } catch(Exception) {
-        console.error(`${Exception}`);
+    } catch(err) {
+        console.error(`${err}`);
         return null;
     }
 } 

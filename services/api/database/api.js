@@ -23,13 +23,21 @@ export const getKaucja = async () => {
     return value ? parseFloat(value) : 0;
 }
 
-export const modifyKaucja = async (value) => {
+export const updateKaucja = async (value) => {
     try {
         const currentKaucja = await getKaucja();
         const newKaucja = currentKaucja + value;
         await AsyncStorage.setItem(KEY_KAUCJA, newKaucja.toString());
     } catch(err) {
         console.log(err);
+    }
+}
+
+export const clearKaucja = async () => {
+    try {
+        await AsyncStorage.setItem(KEY_KAUCJA, "0");
+    } catch(err) {
+        console.error(err);
     }
 }
 
@@ -53,8 +61,8 @@ export const updateStreak = async () => {
     if (prevStreakTimestamp == 0) {
         streak = 1;
         try {
-            await AsyncStorage.setItem(KEY_STREAK, streak);
-            await AsyncStorage.setItem(KEY_LAST_STREAK, timeNow);
+            await AsyncStorage.setItem(KEY_STREAK, streak.toString());
+            await AsyncStorage.setItem(KEY_LAST_STREAK, timeNow.toString());
         } catch(err) {
             console.error(err);
         }
@@ -63,16 +71,17 @@ export const updateStreak = async () => {
 
     const timeDiff = timeNow - prevStreakTimestamp;
 
-    if(timeDiff > 86400) 
-        streak = 0;
+
+    if(timeDiff < 86400)
+        return
     else if(timeDiff >= 86400 && timeDiff <= 172800) 
         streak++;
     else 
-        return;
-    
+        streak = 1;
+
     try {
-        await AsyncStorage.setItem(KEY_STREAK, streak);
-        await AsyncStorage.setItem(KEY_LAST_STREAK, timeNow);
+        await AsyncStorage.setItem(KEY_STREAK, streak.toString());
+        await AsyncStorage.setItem(KEY_LAST_STREAK, timeNow.toString());
     } catch(err) {
         console.error(err);
     }
@@ -129,8 +138,27 @@ export const resetPet = async () => {
 }
 
 // ACTIVITY MENAGEMENT
+export const getActivity = async () => {
+    const value = await AsyncStorage.getItem(KEY_ACTIVITY);
+    return value ? JSON.parse(value) : [];
+}
 
+export const updateActivity = async (scan) => {
+    try {
+        const activity = await getActivity();
 
+        const newActivity = {
+            scanDate: Math.floor(Date.now / 1000),
+            scanName: scan,
+        }
+
+        activity.push(newActivity);
+        await AsyncStorage.setItem(KEY_ACTIVITY, JSON.stringify(activity));
+    } catch(err) {
+        console.error(err);
+    }
+
+}
 
 
 
