@@ -25,8 +25,8 @@ export const StatInformation = () => {
     return (
         <View style={styles.heroCard}>
             <View style={styles.heroBadges}>
-                <StatBadge icon="flame" label="STREAK:" value={streak.toString()} accent="#FF6B35"/>
-                <StatBadge icon="gem" label="KAUCJA:" value={kaucja.toString()} accent="#1E88E5"/>
+                <StatBadge icon="flame" label="STREAK:" value={streak.toString() + " dni"} accent="#FF6B35"/>
+                <StatBadge icon="gem" label="KAUCJA:" value={kaucja.toString() + " zł."} accent="#1E88E5"/>
             </View>
         </View>
     )
