@@ -3,8 +3,8 @@ import { Icon } from '../../services/components/icons';
 
 const styles = require('../styles/globalStyles');
 
-export const ListRow = ({ icon, label }: { icon: string; label: string }) => (
-  <TouchableOpacity activeOpacity={0.7} style={styles.listRow}>
+export const ListRow = ({ icon, label, onPress }: { icon: string; label: string; onPress: () => void }) => (
+  <TouchableOpacity activeOpacity={0.7} style={styles.listRow} onPress={onPress}>
     <View style={styles.listRowLeft}>
       <Icon name={icon} size={18} color="#4CAF50" />
       <Text style={styles.listRowLabel}>{label}</Text>

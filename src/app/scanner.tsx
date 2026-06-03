@@ -54,7 +54,7 @@ export default function scanner() {
             <View style={styles.safe}>
                 <Header/>
                 <View style={[styles.heroCard, { height: 350, justifyContent: 'center', alignItems: 'center' }]}>
-                    <Text style={{ color: '#666' }}>Ładowanie...</Text>
+                    <Text>Ładowanie...</Text>
                 </View>
             </View>
         );
@@ -82,7 +82,7 @@ export default function scanner() {
                                 title="Brak dostępu do Aparatu" 
                                 subtitle="Kliknij tutaj, aby spróbować ponownie." 
                                 icon="camera" 
-                                bg="#c5b30c" 
+                                bg="#b6a71f" 
                                 isLarge
                                 onPress={() => requestPerm()}
                             />
@@ -91,7 +91,7 @@ export default function scanner() {
             }   
             </View>
             <View style={{ paddingHorizontal: 18, marginTop: 10 }}>
-                <ActionCard title='Powrót do Menu' subtitle='Zamknij skaner i wróć do poprzedniej strony' icon="chevron" bg="#4CAF50" onPress={() => router.dismissAll()}/>
+                <ActionCard title='Powrót do Menu' subtitle='Zamknij skaner i wróć do poprzedniej strony' icon="home" bg="#4CAF50" onPress={() => router.dismissAll()}/>
             </View>
         </View>
     );

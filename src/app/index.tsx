@@ -1,27 +1,22 @@
 import { router } from 'expo-router';
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 import { ActionCard } from "../../services/components/actioncard";
 import { Tab } from '../../services/components/bottommenu';
 import { Header } from '../../services/components/header';
 import { ListRow } from '../../services/components/listrow';
-import { StatBadge } from '../../services/components/statbadge';
+import { StatInformation } from '../../services/components/statinformation';
 const styles = require("../../services/styles/globalStyles");
+
 export default function Home() {
     const [activeTab, setActiveTab] = useState("home");
 
     return (
         <View style={styles.safe}>
             <Header/>
-
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-                <View style={styles.heroCard}>
-                    <View style={styles.heroBadges}>
-                        <StatBadge icon="flame" label="STREAK:" value="67" accent="#FF6B35"/>
-                        <StatBadge icon="gem" label="KAUCJA:" value="w chuj" accent="#1E88E5"/>
-                    </View>
-                </View>
+                <StatInformation/>
 
                 <View style={styles.grid}>
                     <ActionCard 
@@ -59,24 +54,28 @@ export default function Home() {
                 </View>
 
                 <View style={styles.listSection}>
-                    <ListRow icon="clock" label="Ostatnia Aktywność"/>
+                    <ListRow icon="clock" label="Ostatnia Aktywność" onPress={() => {}}/>
                     <View style={styles.listDivider}/>
 
-                    <ListRow icon="shop" label="Sklep"/>
+                    <ListRow icon="shop" label="Sklep" onPress={() => {}}/>
                     <View style={styles.listDivider}/>
 
-                    <ListRow icon="trophy" label="Osiągnięcia"/>
+                    <ListRow icon="trophy" label="Osiągnięcia" onPress={() => {}}/>
                     <View style={styles.listDivider}/>
 
-                    <ListRow icon="bell" label="Powiadomienia"/>
+                    <ListRow icon="bell" label="Powiadomienia" onPress={() => {}}/>
                     <View style={styles.listDivider}/>
 
-                    <ListRow icon="info" label="O Aplikacji"/>
-                    <View style={styles.listDivider}/>
-
-                    <ListRow icon="izrael" label="Rozjebać izreal"/>
+                    <ListRow icon="info" label="O Aplikacji" onPress={() => { router.push('/about') }}/>
                     <View style={styles.listDivider}/>
                 </View>
+
+                <View style={{ height: 16 }}/>
+
+                <View style={[styles.actionCardIcon]}>
+                    <Text style={{ color: "#adadad" }}>©2026 kamemae. All rights reserved.</Text>
+                </View>
+
                 <View style={{ height: 16 }}/>
             </ScrollView>
 
