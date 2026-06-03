@@ -1,98 +1,92 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { ActionCard } from "../../services/components/actioncard";
+import { Tab } from '../../services/components/bottommenu';
+import { Header } from '../../services/components/header';
+import { ListRow } from '../../services/components/listrow';
+import { StatBadge } from '../../services/components/statbadge';
+const styles = require("../../services/styles/globalStyles");
+export default function Home() {
+    const [activeTab, setActiveTab] = useState("home");
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
     return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
+        <View style={styles.safe}>
+            <Header/>
+
+            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+                <View style={styles.heroCard}>
+                    <View style={styles.heroBadges}>
+                        <StatBadge icon="flame" label="STREAK:" value="67" accent="#FF6B35"/>
+                        <StatBadge icon="gem" label="KAUCJA:" value="w chuj" accent="#1E88E5"/>
+                    </View>
+                </View>
+
+                <View style={styles.grid}>
+                    <ActionCard 
+                        title="Zeskanuj BUTELKE" 
+                        subtitle="Użyj aparatu w telefonie aby zeskanować" 
+                        icon="camera" 
+                        bg="#4CAF50" 
+                        isLarge onPress={() => { 
+                            router.push('/scanner');
+                        }}
+                    />
+                    
+                
+                    <View style={styles.gridRight}>
+                        <ActionCard 
+                            title="Strefa z NAGRODAMI" 
+                            subtitle="Nagrody za osiągniete cele" 
+                            icon="gift" 
+                            bg="#FF9800" 
+                            onPress={() => {
+                                router.push('/rewards');
+                            }}
+                        />
+
+                        <ActionCard 
+                            title="STATYSTYKI" 
+                            subtitle="Twoje Statystyki" 
+                            icon="stats" 
+                            bg="#FF6B35" 
+                            onPress={() => {
+                                router.push('/stats')
+                            }}
+                        />
+                    </View>
+                </View>
+
+                <View style={styles.listSection}>
+                    <ListRow icon="clock" label="Ostatnia Aktywność"/>
+                    <View style={styles.listDivider}/>
+
+                    <ListRow icon="shop" label="Sklep"/>
+                    <View style={styles.listDivider}/>
+
+                    <ListRow icon="trophy" label="Osiągnięcia"/>
+                    <View style={styles.listDivider}/>
+
+                    <ListRow icon="bell" label="Powiadomienia"/>
+                    <View style={styles.listDivider}/>
+
+                    <ListRow icon="info" label="O Aplikacji"/>
+                    <View style={styles.listDivider}/>
+
+                    <ListRow icon="izrael" label="Rozjebać izreal"/>
+                    <View style={styles.listDivider}/>
+                </View>
+                <View style={{ height: 16 }}/>
+            </ScrollView>
+
+
+            <View style={styles.bottomNav}>
+                <Tab icon="home" label="Strona Główna" active={activeTab === "home"} onPress={() => setActiveTab("home")}/>
+                <Tab icon="pet" label="Kaucuś" active={activeTab === "pet"} onPress={() => setActiveTab("pet")}/>
+                <Tab icon="shop" label="Sklep" active={activeTab === "shop"} onPress={() => setActiveTab("shop")}/>
+                <Tab icon="person" label="Profil" active={activeTab === "profile"} onPress={() => setActiveTab("profile")}/>
+            </View>
+        </View>
     );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
 }
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});

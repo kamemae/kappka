@@ -1,15 +1,25 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+const styles = require("../../services/styles/globalStyles");
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }}></Stack.Screen>
+
+
+      <Stack.Screen name="activity" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="pet" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="profile" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="rewards" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="scanner" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="shop" options={{ headerShown: false }}></Stack.Screen>
+      <Stack.Screen name="stats" options={{ headerShown: false }}></Stack.Screen>
+
+
+
+
+      <Stack.Screen name="test" options={{ headerShown: false }}></Stack.Screen>
+    </Stack>
+  )
 }
