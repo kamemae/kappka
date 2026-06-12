@@ -11,7 +11,7 @@ const KEY_STORE = "kappka_store";
 const KEY_REWARDS = "kappka_rewards";
 
 
-// USER MANAGEMENT
+// USER MANAGEMENT.
 export const getUsername = async () => {
     const name = await AsyncStorage.getItem(KEY_USERNAME);
     return name;
