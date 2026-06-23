@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-
 const styles = require("../../services/styles/globalStyles");
 
 export default function RootLayout() {
@@ -15,7 +14,7 @@ export default function RootLayout() {
       <Stack.Screen name="scanner" options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen name="shop" options={{ headerShown: false }}></Stack.Screen>
       <Stack.Screen name="stats" options={{ headerShown: false }}></Stack.Screen>
-
+      <Stack.Screen name="about" options={{ headerShown: false}}></Stack.Screen>
 
 
 

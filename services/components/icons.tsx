@@ -3,6 +3,7 @@ export const Icon = ({ name, size = 22, color = "#333" }: { name: string; size?:
     const s = { fontSize: size, color, lineHeight: size + 4 };
     const icons: Record<string, string> = {
         flame: "🔥",
+        extinguisher: "🧯",
         gem: "💎",
         camera: "📷",
         gift: "🎁",
@@ -22,6 +23,7 @@ export const Icon = ({ name, size = 22, color = "#333" }: { name: string; size?:
         info: "ℹ️",
         bell: "🔔",
         hammer: "🛠️",
+        calendar: "📆",
     };
     return <Text style={s}>{icons[name] ?? "●"}</Text>;
 }

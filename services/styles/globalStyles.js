@@ -130,8 +130,6 @@ module.exports = StyleSheet.create({
     },
 
 
-
-
     // ACTION CARDS
     actionCard: {
         borderRadius: GLOBAL_RADIUS,

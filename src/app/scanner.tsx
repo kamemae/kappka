@@ -1,10 +1,10 @@
-
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Text, Vibration, View } from "react-native";
-import getInformationWithBarcode from '../../services/api/openfoodfacts/api';
 
+import { updateActivity, updateKaucja, updateStreak } from '../../services/api/database/api';
+import getInformationWithBarcode from '../../services/api/openfoodfacts/api';
 import { ActionCard } from "../../services/components/actioncard";
 import { Header } from '../../services/components/header';
 const styles = require("../../services/styles/globalStyles");
@@ -38,14 +38,18 @@ export default function scanner() {
         if(result) {
             const bottle = result?.product?.packaging;
             alert(`${JSON.stringify(data)}`);
+            await updateKaucja(50);
         } else {
-            alert("Nie znaleziono takiej butelki");
+            //alert("Nie znaleziono takiej butelki");
+            await updateKaucja(10);
         }
+        await updateActivity(barcode);
+        await updateStreak();
 
         setTimeout(() => {
             cooldown.current = false;
             setScanned(false);
-        }, 2000);
+        }, 5000);
     }
 
 
@@ -54,7 +58,7 @@ export default function scanner() {
             <View style={styles.safe}>
                 <Header/>
                 <View style={[styles.heroCard, { height: 350, justifyContent: 'center', alignItems: 'center' }]}>
-                    <Text style={{ color: '#666' }}>Ładowanie...</Text>
+                    <Text>Ładowanie...</Text>
                 </View>
             </View>
         );
@@ -82,7 +86,7 @@ export default function scanner() {
                                 title="Brak dostępu do Aparatu" 
                                 subtitle="Kliknij tutaj, aby spróbować ponownie." 
                                 icon="camera" 
-                                bg="#c5b30c" 
+                                bg="#b6a71f" 
                                 isLarge
                                 onPress={() => requestPerm()}
                             />
@@ -91,7 +95,7 @@ export default function scanner() {
             }   
             </View>
             <View style={{ paddingHorizontal: 18, marginTop: 10 }}>
-                <ActionCard title='Powrót do Menu' subtitle='Zamknij skaner i wróć do poprzedniej strony' icon="chevron" bg="#4CAF50" onPress={() => router.dismissAll()}/>
+                <ActionCard title='Powrót do Menu' subtitle='Zamknij skaner i wróć do poprzedniej strony' icon="home" bg="#4CAF50" onPress={() => router.dismissAll()}/>
             </View>
         </View>
     );
